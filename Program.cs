@@ -9,8 +9,12 @@ while (opcao > 0)
   Console.WriteLine("Digite a opção:");
   Console.WriteLine("1 - Abstract Factory");
 
-  if (!int.TryParse(Console.Read().ToString(), out opcao))
-    opcao = -1;
+  if (!int.TryParse(Console.ReadKey().KeyChar.ToString(), out opcao))
+    continue;
+
+  Console.WriteLine("");
+  Console.WriteLine("------------------------");
+  Console.WriteLine("");
 
   switch (opcao)
   {
@@ -18,5 +22,6 @@ while (opcao > 0)
       ExecutarAbstractFactory.Executar();
       break;
   }
+  Console.ReadKey();
 }
 
