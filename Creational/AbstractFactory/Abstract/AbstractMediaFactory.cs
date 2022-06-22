@@ -7,7 +7,7 @@ namespace Fundamentos.DesignPatterns.Creational.AbstractFactory.Abstract
   {
     public abstract MediaSocial CreateMediaSocial();
 
-    public static AbstractMediaFactory CriarFactory(IMediaSocial mediaSocial)
+    public static AbstractMediaFactory CreateFactory(IMediaSocial mediaSocial)
     {
       switch (mediaSocial)
       {
