@@ -1,6 +1,6 @@
 namespace Fundamentos.DesignPatterns.Creational.AbstractFactory
 {
-  public enum IMediaSocial
+  public enum MediaSocial
   {
     Facebook,
     Orkut,

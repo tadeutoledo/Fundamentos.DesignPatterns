@@ -5,15 +5,15 @@ namespace Fundamentos.DesignPatterns.Creational.AbstractFactory.Abstract
 {
   public abstract class AbstractMediaFactory
   {
-    public abstract MediaSocial CreateMediaSocial();
+    public abstract Products.MediaSocial CreateMediaSocial();
 
-    public static AbstractMediaFactory CreateFactory(IMediaSocial mediaSocial)
+    public static AbstractMediaFactory CreateFactory(MediaSocial mediaSocial)
     {
       switch (mediaSocial)
       {
-        case IMediaSocial.Facebook:
+        case MediaSocial.Facebook:
           return new FacebookMediaFactory();
-        case IMediaSocial.Orkut:
+        case MediaSocial.Orkut:
           return new OrkutMediaFactory();
         default:
           throw new ApplicationException("Media Social invalid.");

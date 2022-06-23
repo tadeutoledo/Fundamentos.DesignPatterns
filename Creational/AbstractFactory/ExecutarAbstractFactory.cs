@@ -6,7 +6,7 @@ namespace Fundamentos.DesignPatterns.Creational.AbstractFactory
   {
     public static void Executar()
     {
-      var factory = AbstractMediaFactory.CreateFactory(IMediaSocial.Facebook);
+      var factory = AbstractMediaFactory.CreateFactory(MediaSocial.Facebook);
       var media = factory.CreateMediaSocial();
       Console.WriteLine(media.Post("Primeiro Post", "Texto do meu primeiro post"));
       Console.WriteLine(media.Like("O meu primeiro post"));

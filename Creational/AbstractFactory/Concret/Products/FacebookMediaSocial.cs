@@ -6,7 +6,7 @@ using Fundamentos.DesignPatterns.Creational.AbstractFactory.Abstract.Products;
 
 namespace Fundamentos.DesignPatterns.Creational.AbstractFactory.Concret.Products
 {
-  public class FacebookMediaSocial : MediaSocial
+  public class FacebookMediaSocial : Abstract.Products.MediaSocial
   {
     public override string Like(string tituloPost)
     {

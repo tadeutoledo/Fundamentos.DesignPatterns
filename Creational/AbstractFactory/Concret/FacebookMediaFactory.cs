@@ -6,7 +6,7 @@ namespace Fundamentos.DesignPatterns.Creational.AbstractFactory.Concret
 {
   public class FacebookMediaFactory : AbstractMediaFactory
   {
-    public override MediaSocial CreateMediaSocial()
+    public override Abstract.Products.MediaSocial CreateMediaSocial()
     {
       return new FacebookMediaSocial();
     }
