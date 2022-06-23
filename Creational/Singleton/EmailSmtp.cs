@@ -2,7 +2,7 @@ namespace Fundamentos.DesignPatterns.Creational.Singleton
 {
   public class EmailSmtp
   {
-    private static EmailSmtp _instance;
+    private static EmailSmtp? _instance;
     private static object locker = new object();
 
     public EmailSmtp()

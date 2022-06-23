@@ -3,6 +3,7 @@
 using Fundamentos.DesignPatterns.Creational.AbstractFactory;
 using Fundamentos.DesignPatterns.Creational.FactoryMethod;
 using Fundamentos.DesignPatterns.Creational.Singleton;
+using Fundamentos.DesignPatterns.Strutural.Adapter;
 
 int opcao = 999;
 
@@ -12,6 +13,7 @@ while (opcao > 0)
   Console.WriteLine("1 - Abstract Factory");
   Console.WriteLine("2 - Factory Method");
   Console.WriteLine("3 - Singleton");
+  Console.WriteLine("4 - Adapter");
 
   if (!int.TryParse(Console.ReadKey().KeyChar.ToString(), out opcao))
     continue;
@@ -32,7 +34,11 @@ while (opcao > 0)
     case 3:
       ExecutarSingleton.Executar();
       break;
+    case 4:
+      ExecutarAdapter.Executar();
+      break;
   }
+
   Console.WriteLine("");
   Console.WriteLine("------------------------");
   Console.WriteLine("Tecle para recomeçar.");
