@@ -4,16 +4,24 @@ using Fundamentos.DesignPatterns.Creational.AbstractFactory;
 using Fundamentos.DesignPatterns.Creational.FactoryMethod;
 using Fundamentos.DesignPatterns.Creational.Singleton;
 using Fundamentos.DesignPatterns.Strutural.Adapter;
+using Fundamentos.DesignPatterns.Strutural.Facade;
 
 int opcao = 999;
 
 while (opcao > 0)
 {
   Console.WriteLine("Digite a opção:");
+  Console.WriteLine("");
+  Console.WriteLine("  ##### Creational #####");
+  Console.WriteLine("");
   Console.WriteLine("1 - Abstract Factory");
   Console.WriteLine("2 - Factory Method");
   Console.WriteLine("3 - Singleton");
+  Console.WriteLine("");
+  Console.WriteLine("  ##### Strutural #####");
+  Console.WriteLine("");
   Console.WriteLine("4 - Adapter");
+  Console.WriteLine("5 - Facade");
 
   if (!int.TryParse(Console.ReadKey().KeyChar.ToString(), out opcao))
     continue;
@@ -36,6 +44,9 @@ while (opcao > 0)
       break;
     case 4:
       ExecutarAdapter.Executar();
+      break;
+    case 5:
+      ExecutarFacade.Executar();
       break;
   }
 
