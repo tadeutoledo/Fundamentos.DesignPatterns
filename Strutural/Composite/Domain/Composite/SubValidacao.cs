@@ -22,5 +22,10 @@ namespace Fundamentos.DesignPatterns.Strutural.Composite.Domain.Composite
       Mensagem = mensagem;
       Valido = valido;
     }
+
+    public void ExibirMensagens(int sub)
+    {
+      Console.WriteLine($"{new string('-', sub)} - {NomeClasse} - {Mensagem}");
+    }
   }
 }

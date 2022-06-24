@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Fundamentos.DesignPatterns.Strutural.Composite.Domain
 {
-  public class Pedido
+  public class Pedido : Entity
   {
     [Required]
     public decimal Valor { get; set; }

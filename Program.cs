@@ -4,6 +4,7 @@ using Fundamentos.DesignPatterns.Creational.AbstractFactory;
 using Fundamentos.DesignPatterns.Creational.FactoryMethod;
 using Fundamentos.DesignPatterns.Creational.Singleton;
 using Fundamentos.DesignPatterns.Strutural.Adapter;
+using Fundamentos.DesignPatterns.Strutural.Composite;
 using Fundamentos.DesignPatterns.Strutural.Facade;
 
 int opcao = 999;
@@ -22,6 +23,7 @@ while (opcao > 0)
   Console.WriteLine("");
   Console.WriteLine("4 - Adapter");
   Console.WriteLine("5 - Facade");
+  Console.WriteLine("6 - Composite");
 
   if (!int.TryParse(Console.ReadKey().KeyChar.ToString(), out opcao))
     continue;
@@ -47,6 +49,9 @@ while (opcao > 0)
       break;
     case 5:
       ExecutarFacade.Executar();
+      break;
+    case 6:
+      ExecutarComposite.Executar();
       break;
   }
 

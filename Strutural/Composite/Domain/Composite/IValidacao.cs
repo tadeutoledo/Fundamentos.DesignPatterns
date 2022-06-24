@@ -6,5 +6,7 @@ namespace Fundamentos.DesignPatterns.Strutural.Composite.Domain.Composite
     public string NomeMetodo { get; set; }
     public string Mensagem { get; set; }
     public bool Valido { get; set; }
+
+    public void ExibirMensagens(int sub);
   }
 }

@@ -4,7 +4,7 @@ namespace Fundamentos.DesignPatterns.Strutural.Composite.Domain.Composite
 {
   public class Validacao : IValidacao
   {
-    public IList<IValidacao> Validacoes;
+    private readonly IList<IValidacao> _listaValidacoes;
     public string NomeClasse { get; set; }
     public string NomeMetodo { get; set; }
     public string Mensagem { get; set; }
@@ -12,7 +12,7 @@ namespace Fundamentos.DesignPatterns.Strutural.Composite.Domain.Composite
 
     public Validacao()
     {
-      Validacoes = new List<IValidacao>();
+      _listaValidacoes = new List<IValidacao>();
     }
 
     public Validacao(
@@ -21,7 +21,7 @@ namespace Fundamentos.DesignPatterns.Strutural.Composite.Domain.Composite
       string mensagem,
       bool valido)
     {
-      Validacoes = new List<IValidacao>();
+      _listaValidacoes = new List<IValidacao>();
       NomeClasse = nomeClasse;
       NomeMetodo = nomeMetodo;
       Mensagem = mensagem;
@@ -30,12 +30,22 @@ namespace Fundamentos.DesignPatterns.Strutural.Composite.Domain.Composite
 
     public void Add(IValidacao validacao)
     {
-      Validacoes.Add(validacao);
+      _listaValidacoes.Add(validacao);
     }
 
     public void Remove(IValidacao validacao)
     {
-      Validacoes.Remove(validacao);
+      _listaValidacoes.Remove(validacao);
+    }
+
+    public void ExibirMensagens(int sub)
+    {
+      Console.WriteLine($"{new string('-', sub)} - {NomeClasse} - {Mensagem}");
+
+      foreach (var mensagem in _listaValidacoes)
+      {
+        mensagem.ExibirMensagens(sub + 2);
+      }
     }
   }
 }
