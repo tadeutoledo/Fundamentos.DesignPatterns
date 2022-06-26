@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Fundamentos.DesignPatterns.Strutural.Composite.Domain;
 using Fundamentos.DesignPatterns.Strutural.Composite.Domain.Composite;
-using Fundamentos.DesignPatterns.Strutural.Composite.Fabric;
 
 namespace Fundamentos.DesignPatterns.Strutural.Composite
 {
@@ -14,12 +9,13 @@ namespace Fundamentos.DesignPatterns.Strutural.Composite
     {
       Pedido pedido = new Pedido()
       {
-        Valor = 990.20M,
-        IdProduto = Guid.NewGuid(),
+        Valor = null,
+        IdProduto = null,
         Cliente = new Cliente()
         {
           Nascimento = DateTime.Now,
           Nome = null,
+          Email = null,
           Endereco = new Endereco()
           {
             Rua = "",
@@ -29,15 +25,13 @@ namespace Fundamentos.DesignPatterns.Strutural.Composite
         CartaoPedido = new CartaoCredito()
         {
           BandeiraCartao = "001",
-          NumeroCartao = "1111222233334444"
+          NumeroCartao = null
         }
       };
 
-      Validacao validacao = new Validacao();
-
-      AfluenteValidator validator = new AfluenteValidator(new SubValidacaoFactory(), validacao);
-      validacao = (Validacao)validator.Validate(pedido);
-      validacao.ExibirMensagens(2);
+      var validator = new AfluenteValidator<Pedido>();
+      ValidationResult validationResult = validator.Validate(pedido);
+      validationResult.ExibirMensagens();
     }
   }
 }

@@ -1,6 +1,6 @@
 namespace Fundamentos.DesignPatterns.Strutural.Composite.Domain.Composite
 {
-  public interface IValidacao
+  public interface IValidation
   {
     public string NomeClasse { get; set; }
     public string NomeMetodo { get; set; }

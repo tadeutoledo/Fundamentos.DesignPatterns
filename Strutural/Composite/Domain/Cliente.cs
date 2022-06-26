@@ -6,6 +6,8 @@ namespace Fundamentos.DesignPatterns.Strutural.Composite.Domain
   {
     [Required]
     public string? Nome { get; set; }
+    [Required]
+    public string? Email { get; set; }
     public DateTime Nascimento { get; set; }
     [Required]
     public Endereco? Endereco { get; set; }

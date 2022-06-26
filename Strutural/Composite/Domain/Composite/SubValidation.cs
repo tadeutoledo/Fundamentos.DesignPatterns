@@ -1,17 +1,17 @@
 namespace Fundamentos.DesignPatterns.Strutural.Composite.Domain.Composite
 {
-  public class SubValidacao : IValidacao
+  public class SubValidation : IValidation
   {
     public string NomeClasse { get; set; }
     public string NomeMetodo { get; set; }
     public string Mensagem { get; set; }
     public bool Valido { get; set; }
 
-    public SubValidacao()
+    public SubValidation()
     {
 
     }
-    public SubValidacao(
+    public SubValidation(
       string nomeClasse,
       string nomeMetodo,
       string mensagem,
@@ -25,7 +25,10 @@ namespace Fundamentos.DesignPatterns.Strutural.Composite.Domain.Composite
 
     public void ExibirMensagens(int sub)
     {
-      Console.WriteLine($"{new string('-', sub)} - {NomeClasse} - {Mensagem}");
+      if (!string.IsNullOrEmpty(NomeClasse))
+      {
+        Console.WriteLine($"{new string('-', sub)}{NomeClasse} - {Mensagem}");
+      }
     }
   }
 }

@@ -2,118 +2,98 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Fundamentos.DesignPatterns.Strutural.Composite.Domain;
 using Fundamentos.DesignPatterns.Strutural.Composite.Domain.Composite;
-using Fundamentos.DesignPatterns.Strutural.Composite.Fabric;
 
 namespace Fundamentos.DesignPatterns.Strutural.Composite
 {
-  public class AfluenteValidator
+  public class AfluenteValidator<E> where E : Entity
   {
-    private readonly ValidacaoFactory _subValidacaofactory;
-    private readonly Validacao _validator;
+    private Validation? _mainValidator, _propertyValidator;
 
-    public AfluenteValidator(
-      SubValidacaoFactory subValidacaoFactory,
-      Validacao validator)
+    public Domain.ValidationResult Validate<T>(T entity) where T : Entity
     {
-      _subValidacaofactory = subValidacaoFactory;
-      _validator = validator;
-    }
-
-    public IValidacao Validate<T>(T entity) where T : Entity
-    {
-      foreach (var property in TypeDescriptor.GetProperties(typeof(T)).Cast<PropertyDescriptor>())
+      foreach (var property in GetPrimitiveTypes(entity))
       {
-        if (property.Attributes.Cast<Attribute>().Any(a => a.GetType() == typeof(RequiredAttribute)))
-        {
-          ValidatePropertyRequired(entity, property);
-        }
+        AddValidation(entity, new SubValidation(
+          entity.GetType().Name,
+          property.DisplayName,
+          $"O campo {property.DisplayName} está inválido.",
+          true));
       }
 
-      return _validator;
+      foreach (var property in GetObjectTypes(entity))
+      {
+        ValidatePropertyRequired(entity, property);
+      }
+
+      return new Domain.ValidationResult(_mainValidator);
     }
 
-    private void ValidatePropertyRequired<T>(T entity, PropertyDescriptor property)
+    private void ValidatePropertyRequired<T>(T entity, PropertyDescriptor property) where T : Entity
     {
-      var typeProperty = Type.GetTypeCode(property.PropertyType);
       var valueProperty = property.GetValue(entity);
 
-      switch (typeProperty)
+      if (valueProperty is Entity)
       {
-        case TypeCode.String:
-          string value = valueProperty?.ToString() ?? "";
+        if (valueProperty is Cliente)
+        {
+          Validate(valueProperty as Cliente);
+        }
 
-          if (string.IsNullOrEmpty(value))
-          {
-            _validator.Add(_subValidacaofactory.CreateValidacao(
-              entity.GetType().Name,
-              property.DisplayName,
-              $"O campo {property.DisplayName} está inválido.",
-              true));
-          }
-          break;
+        if (valueProperty is Pedido)
+        {
+          Validate(valueProperty as Pedido);
+        }
 
-        case TypeCode.Decimal:
-          Decimal valueDecimal = 0;
+        if (valueProperty is Endereco)
+        {
+          Validate(valueProperty as Endereco);
+        }
 
-          if (!decimal.TryParse(valueProperty?.ToString(), out valueDecimal))
-          {
-            _validator.Add(_subValidacaofactory.CreateValidacao(
-              entity.GetType().Name,
-              property.DisplayName,
-              $"O campo {property.DisplayName} está inválido.",
-              true));
-          }
-
-          break;
-
-        case TypeCode.Int16:
-        case TypeCode.Int32:
-        case TypeCode.Int64:
-          Int64 valueInt = 0;
-
-          if (!Int64.TryParse(valueProperty?.ToString(), out valueInt))
-          {
-            _validator.Add(_subValidacaofactory.CreateValidacao(
-              entity.GetType().Name,
-              property.DisplayName,
-              $"O campo {property.DisplayName} está inválido.",
-              true));
-          }
-
-          break;
-
-        case TypeCode.Object:
-
-          if (valueProperty is Entity)
-          {
-            if (valueProperty is Cliente)
-            {
-              ValidateObject(valueProperty as Cliente);
-            }
-
-            if (valueProperty is Pedido)
-            {
-              ValidateObject(valueProperty as Pedido);
-            }
-
-            if (valueProperty is Endereco)
-            {
-              ValidateObject(valueProperty as Endereco);
-            }
-
-            if (valueProperty is CartaoCredito)
-            {
-              ValidateObject(valueProperty as CartaoCredito);
-            }
-          }
-
-          break;
+        if (valueProperty is CartaoCredito)
+        {
+          Validate(valueProperty as CartaoCredito);
+        }
       }
     }
 
-    private void ValidateObject<T>(T obj) where T : Entity
+    private void AddValidation<T>(T entity, IValidation validacao) where T : Entity
     {
-      Validate(obj);
+      if (_mainValidator == null)
+      {
+        _mainValidator = new Validation(validacao.NomeClasse, validacao.NomeMetodo, validacao.Mensagem, validacao.Valido);
+        _propertyValidator = _mainValidator;
+        return;
+      }
+
+      var classeValidacao = _mainValidator.GetByNomeClasse(typeof(T).Name);
+
+      if (classeValidacao == null || classeValidacao is SubValidation)
+      {
+        _propertyValidator.Add(new Validation(validacao.NomeClasse, validacao.NomeMetodo, validacao.Mensagem, validacao.Valido));
+      }
+      else
+      {
+        ((Validation)classeValidacao).Add(validacao);
+      }
     }
+
+    private IList<PropertyDescriptor> GetObjectTypes<T>(T entity) where T : Entity
+    {
+      return TypeDescriptor.GetProperties(typeof(T))
+              .Cast<PropertyDescriptor>()
+              .Where(p => p.Attributes.Cast<Attribute>().Any(a => a.GetType() == typeof(RequiredAttribute)))
+              .Where(p => p.PropertyType == typeof(Entity) || p.PropertyType.BaseType == typeof(Entity))
+              .ToList();
+    }
+
+    private IList<PropertyDescriptor> GetPrimitiveTypes<T>(T entity) where T : Entity
+    {
+      return TypeDescriptor.GetProperties(typeof(T))
+              .Cast<PropertyDescriptor>()
+              .Where(p => p.Attributes.Cast<Attribute>().Any(a => a.GetType() == typeof(RequiredAttribute)))
+              .Where(p => p.PropertyType != typeof(Entity) && p.PropertyType.BaseType != typeof(Entity))
+              .ToList();
+    }
+
   }
 }

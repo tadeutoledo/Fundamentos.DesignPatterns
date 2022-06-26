@@ -2,45 +2,48 @@ using System.Collections;
 
 namespace Fundamentos.DesignPatterns.Strutural.Composite.Domain.Composite
 {
-  public class Validacao : IValidacao
+  public class Validation : IValidation
   {
-    private readonly IList<IValidacao> _listaValidacoes;
+    private readonly IList<IValidation> _listaValidacoes;
     public string NomeClasse { get; set; }
     public string NomeMetodo { get; set; }
     public string Mensagem { get; set; }
     public bool Valido { get; set; }
 
-    public Validacao()
+    public Validation()
     {
-      _listaValidacoes = new List<IValidacao>();
+      _listaValidacoes = new List<IValidation>();
     }
 
-    public Validacao(
+    public Validation(
       string nomeClasse,
       string nomeMetodo,
       string mensagem,
       bool valido)
     {
-      _listaValidacoes = new List<IValidacao>();
+      _listaValidacoes = new List<IValidation>();
       NomeClasse = nomeClasse;
       NomeMetodo = nomeMetodo;
       Mensagem = mensagem;
       Valido = valido;
     }
 
-    public void Add(IValidacao validacao)
+    public void Add(IValidation validacao)
     {
       _listaValidacoes.Add(validacao);
     }
 
-    public void Remove(IValidacao validacao)
+    public IValidation? GetByNomeClasse(string nomeClasse)
     {
-      _listaValidacoes.Remove(validacao);
+      return _listaValidacoes.LastOrDefault(x => x.NomeClasse == nomeClasse);
     }
 
     public void ExibirMensagens(int sub)
     {
-      Console.WriteLine($"{new string('-', sub)} - {NomeClasse} - {Mensagem}");
+      if (!string.IsNullOrEmpty(NomeClasse))
+      {
+        Console.WriteLine($"{new string('-', sub)}{NomeClasse} - {Mensagem}");
+      }
 
       foreach (var mensagem in _listaValidacoes)
       {
