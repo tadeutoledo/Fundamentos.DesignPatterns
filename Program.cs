@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using Fundamentos.DesignPatterns.Behavioral.Observer;
 using Fundamentos.DesignPatterns.Behavioral.Strategy;
 using Fundamentos.DesignPatterns.Creational.AbstractFactory;
 using Fundamentos.DesignPatterns.Creational.FactoryMethod;
@@ -30,6 +31,7 @@ while (opcao > 0)
   Console.WriteLine("");
   Console.WriteLine("7 - Command");
   Console.WriteLine("8 - Strategy");
+  Console.WriteLine("9 - Observer");
 
   if (!int.TryParse(Console.ReadKey().KeyChar.ToString(), out opcao))
     continue;
@@ -64,6 +66,9 @@ while (opcao > 0)
       break;
     case 8:
       ExecutarStrategy.Executar();
+      break;
+    case 9:
+      ExecutarObserver.Executar();
       break;
   }
 
