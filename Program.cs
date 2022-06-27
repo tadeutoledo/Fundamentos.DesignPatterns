@@ -24,6 +24,10 @@ while (opcao > 0)
   Console.WriteLine("4 - Adapter");
   Console.WriteLine("5 - Facade");
   Console.WriteLine("6 - Composite");
+  Console.WriteLine("");
+  Console.WriteLine("  ##### Behavioral #####");
+  Console.WriteLine("");
+  Console.WriteLine("7 - Command");
 
   if (!int.TryParse(Console.ReadKey().KeyChar.ToString(), out opcao))
     continue;
@@ -52,6 +56,9 @@ while (opcao > 0)
       break;
     case 6:
       ExecutarComposite.Executar();
+      break;
+    case 7:
+      ExecutarCommand.Executar();
       break;
   }
 
